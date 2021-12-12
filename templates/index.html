@@ -8,5 +8,10 @@
 {#    <span>Hello World!!!</span>#}
 <h3>{{ value.title }}</h3>
 <div>{{ content.key }}</div>
+<a href="{% url 'index:download1' %}">HttpResponse-download</a>
+<br>
+<a href="{% url 'index:download2' %}">StreamingHttpResponse-download</a>
+<br>
+<a href="{% url 'index:download3' %}">FileResponse-download</a>
 </body>
 </html>
