@@ -25,6 +25,7 @@ urlpatterns = [
     path('user/', include(('user.urls', 'user'), namespace='user')),
 
 ]
+
 # urlpatterns = [
 #     url('admin/', admin.site.urls),
 #     url('^', include('index.urls'))

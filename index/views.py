@@ -9,8 +9,12 @@ def index(request):
     # return render(request, 'index.html')
     # print(reverse('index:trunTo'))
     # return redirect(reverse('index:mydate', args=[2021,12,12]))
-    html = '<h1>Hello World</h1>'
-    return HttpResponse(html, status=200)
+    # html = '<h1>Hello World</h1>'
+    # return HttpResponse(html, status=200)
+    value = {'title': 'Hello MyDjango'}
+    content = {'key': 'This is MyDjaogo'}
+    # return render(request, 'index.html', context=value)
+    return render(request, 'index.html', locals())
 
 
 def new(request):
