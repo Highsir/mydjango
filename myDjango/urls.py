@@ -25,6 +25,11 @@ urlpatterns = [
     path('user/', include(('user.urls', 'user'), namespace='user')),
 
 ]
+# 全局404
+handler404 = 'index.views.pag_not_found'
+
+# 全局500
+handler500 = 'index.views.page_error'
 
 # urlpatterns = [
 #     url('admin/', admin.site.urls),
