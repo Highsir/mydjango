@@ -13,5 +13,14 @@
 <a href="{% url 'index:download2' %}">StreamingHttpResponse-download</a>
 <br>
 <a href="{% url 'index:download3' %}">FileResponse-download</a>
+
+<form action="" method="post">
+    # Django 的CSRF防御机制
+    {% csrf_token %}
+    <input type="text" name="user"/>
+    <input type="submit" name="提交"/>
+</form>
+
+
 </body>
 </html>

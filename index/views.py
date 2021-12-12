@@ -13,13 +13,31 @@ def index(request):
     # return redirect(reverse('index:mydate', args=[2021,12,12]))
     # html = '<h1>Hello World</h1>'
     # return HttpResponse(html, status=200)
-    if request.GET.get('error', ''):
-        raise Http404("Page is not exits")
-    else:
-        value = {'title': 'Hello MyDjango'}
-        content = {'key': 'This is MyDjaogo'}
+    # if request.GET.get('error', ''):
+    #     raise Http404("Page is not exits")
+    # else:
+    #     value = {'title': 'Hello MyDjango'}
+    #     content = {'key': 'This is MyDjaogo'}
         # return render(request, 'index.html', context=value)
-        return render(request, 'index.html', locals())
+        # return render(request, 'index.html', locals())
+    if request.method == 'GET':
+        # 类方法的使用
+        print(request.is_secure())
+        print(request.is_ajax())
+        print(request.get_host())
+        print(request.get_full_path())
+        print(request.get_raw_uri())
+        # 属性的使用
+        print(request.COOKIES)
+        print(request.content_type)
+        print(request.content_params)
+        print(request.scheme)
+        # 获取GET的请求参数
+        print(request.GET.get('user', ''))
+        return render(request, 'index.html')
+    elif request.method == 'POST':
+        print(request.POST.get('user', ''))
+        return render(request, 'index.html')
 
 
 def new(request):
