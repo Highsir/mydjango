@@ -138,6 +138,9 @@ STARICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), os.path.join(BASE_DIR, 'in
 MEDIA_URL = '/media/'
 MEDIA_ROOT = [os.path.join(BASE_DIR, 'media')]
 
+# 自定义COOKIE加密
+SIGNING_BACKEND = 'myDjango.signer.myTimestampSigner'
+
 # 配置文件数据的临时存放文件夹
 FILE_UPLOAD_TEMP_DIR = '/tmp'
 FILE_UPLOAD_MAX_MEMORY_SIZE = 209715200

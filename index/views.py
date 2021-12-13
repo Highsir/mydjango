@@ -1,10 +1,10 @@
 import os
 
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import StreamingHttpResponse
-from django.http import FileResponse
+from django.http import FileResponse, response
 
 
 def index(request):
@@ -41,6 +41,31 @@ def index(request):
         print(request.POST.get('user', ''))
         return render(request, 'index.html')
 
+def create(request):
+    r = redirect(reverse('index:index'))
+    r.set_signed_cookie('uuid','id',salt='myDjango', max_age=10)
+    return r
+
+def myCookie(request):
+    cookieExist = request.COOKIES.get('uuid', '')
+    if cookieExist:
+        try:
+            request.get_signed_cookie('uuid', salt='myDjango')
+        except:
+            raise Http404('当前Cookie无效')
+        return HttpResponse('cookie: '+ cookieExist)
+    else:
+        raise Http404('当前访问没有Cookie')
+
+def getHeader(request):
+    """请求头实现反爬虫"""
+    header = request.META.get('HTTP_SIGN', '')
+    if header:
+        value = {'header': header}
+    else:
+        value = {'header': 'null'}
+    return JsonResponse(value)
+
 def upload(request):
     # 请求方法为POST时， 执行文件上传
     if request.method == 'POST':
@@ -67,6 +92,7 @@ def uploadPicture(request):
         return HttpResponse('upload over!')
     else:
         return render(request, 'picture.html')
+
 
 def new(request):
     return HttpResponse('This is new page.')
