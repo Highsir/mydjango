@@ -1,3 +1,5 @@
+import os
+
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -39,6 +41,32 @@ def index(request):
         print(request.POST.get('user', ''))
         return render(request, 'index.html')
 
+def upload(request):
+    # 请求方法为POST时， 执行文件上传
+    if request.method == 'POST':
+        myFile = request.FILES.get('myfile', None)
+        if not myFile:
+            return HttpResponse('no file for upload')
+        f = open(os.path.join('uploadfile', myFile.name), 'wb+')
+        for  chunk in myFile.chunks():
+            f.write(chunk)
+        f.close()
+        return HttpResponse('upload over!')
+    else:
+        return render(request, 'upload.html')
+
+def uploadPicture(request):
+    if request.method == 'POST':
+        myFile = request.FILES.get('picture', None)
+        if not myFile:
+            return HttpResponse('no file for upload')
+        f = open(os.path.join('media', myFile.name), 'wb+')
+        for chunk in myFile.chunks():
+            f.write(chunk)
+        f.close()
+        return HttpResponse('upload over!')
+    else:
+        return render(request, 'picture.html')
 
 def new(request):
     return HttpResponse('This is new page.')

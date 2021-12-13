@@ -13,6 +13,8 @@ urlpatterns = [
     path('download/file1', views.download1, name='download1'),
     path('download/file2', views.download2, name='download2'),
     path('download/file3', views.download3, name='download3'),
+    path('upload', views.upload, name='upload'),
+    path('uploadPicture', views.uploadPicture, name='picture'),
 ]
 
 

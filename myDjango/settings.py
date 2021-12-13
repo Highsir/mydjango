@@ -134,3 +134,11 @@ USE_TZ = True
 
 STATIC_URL = '/Allstatic/'
 STARICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), os.path.join(BASE_DIR, 'index/Mystatic')]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = [os.path.join(BASE_DIR, 'media')]
+
+# 配置文件数据的临时存放文件夹
+FILE_UPLOAD_TEMP_DIR = '/tmp'
+FILE_UPLOAD_MAX_MEMORY_SIZE = 209715200
+FILE_UPLOAD_HANDLERS = ['myDjango.handler.myFileUploadHandler']
