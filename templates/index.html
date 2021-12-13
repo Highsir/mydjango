@@ -1,8 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Hello World</title>
+    {% load static %}
+    <script src="{% static 'jquery-3.6.0.min.js' %}"></script>
+    <script>
+    $(function () {
+        $("#bt01").click(function () {
+            var value = $.ajax({
+                type: "GET",
+                url: "/getHeader",
+                dataType: 'json',
+                async: false,
+                header: {
+                    "sign": "123",
+                }
+            }).responseJSON;
+            value = '<h2>' + value["header"] + '</h2>'
+            $("#myDic").html(value);
+        });
+
+    });
+    </script>
 </head>
 <body>
 {#    <span>Hello World!!!</span>#}
@@ -13,6 +33,16 @@
 <a href="{% url 'index:download2' %}">StreamingHttpResponse-download</a>
 <br>
 <a href="{% url 'index:download3' %}">FileResponse-download</a>
+
+<br>
+<a href="{% url 'index:create' %}">create cookie</a>
+<br>
+<a href="{% url 'index:myCookie' %}">read cookie</a>
+<br>
+<br>
+<h3>Hello Header</h3>
+<div id="myDiv"><h2>AJAX获取请求头</h2></div>
+<button id="bt01" type="button">改变内容</button>
 
 <form action="" method="post">
     # Django 的CSRF防御机制

@@ -15,6 +15,9 @@ urlpatterns = [
     path('download/file3', views.download3, name='download3'),
     path('upload', views.upload, name='upload'),
     path('uploadPicture', views.uploadPicture, name='picture'),
+    path('create', views.create, name='create'),
+    path('myCookie', views.myCookie, name='myCookie'),
+    path('getHeader', views.getHeader, name='getHeader'),
 ]
 
 
