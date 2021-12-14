@@ -5,6 +5,9 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import StreamingHttpResponse
 from django.http import FileResponse, response
+from django.views.generic import RedirectView, TemplateView, ListView, DetailView
+
+from index.models import PersonInfo
 
 
 def index(request):
@@ -40,6 +43,7 @@ def index(request):
     elif request.method == 'POST':
         print(request.POST.get('user', ''))
         return render(request, 'index.html')
+
 
 def create(request):
     r = redirect(reverse('index:index'))
@@ -142,3 +146,56 @@ def download3(request):
         return r
     except Exception:
         raise Http404('Download error')
+
+
+class trunTo(RedirectView):
+    permanent = False
+    url = None
+    pattern_name = 'index:index'
+    query_string = True
+
+    # 重写get_redirect_url
+    def get_redirect_url(self, *args, **kwargs):
+        print('This is get_redirct_url')
+        return super().get_redirect_url(*args, **kwargs)
+
+    # 重写get
+    def get(self, request, *args, **kwargs):
+        print(request.META.get('HTTP_USER_AGENT'))
+        return super().get(request, *args, **kwargs)
+
+
+class clsIndex(TemplateView):
+    template_name = 'index.html'
+    template_engine = None
+    content_type = None
+    extra_context = {'title': 'This is GET'}
+
+    # 重写get_context_data
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['value'] = 'I am myDjango'
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.extra_context = {'title': 'This is POST'}
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context)
+
+
+class indexList(ListView):
+    template_name = 'view.html'
+    extra_context = {'title': '人员信息表'}
+    queryset = PersonInfo.objects.filter().all()
+    paginate_by = 1
+
+class indexDetail(DetailView):
+    template_name = 'detail.html'
+    extra_context = {'title': '人员信息表'}
+    # 设置模型的查询字段
+    slug_field = 'age'
+    # 设置路由的变量名，与属性slug_field实现模型的查询操作
+    pk_url_kwarg = 'pk'
+    model = PersonInfo
+    # queryset = PersonInfo.objects.all()
+

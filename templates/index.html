@@ -51,6 +51,49 @@
     <input type="submit" name="提交"/>
 </form>
 
+<h3>Hello Redirect</h3>
+<a href="{% url 'index:trunTo' %}?k=1">ToTurn</a>
+
+<br>
+<h3>Hello, {{ title }}</h3>
+<div>{{ value }}</div>
+<br>
+<form action="" method="post">
+    {% csrf_token %}
+     <input type="submit" value="submit">
+</form>
+
+<br>
+{#<title> {{ title }}</title>#}
+<h3>{{ title }}</h3>
+<table border="1">
+    {% for i in personinfo_list %}
+        <tr>
+            <th>{{ i.name }}</th>
+            <th>{{ i.age }}</th>
+        </tr>
+    {% endfor %}
+</table>
+<br>
+{% if is_paginated %}
+<div class="pagination">
+    <span class="page-links">
+        {% if page_obj.has_previous %}
+        <a href="/?page={{ page_obj.previous_page_number }}">上一页</a>
+        {% endif %}
+    {% if page_obj.has_next %}
+    <a href="/?page={{ page_obj.next_page_number }}">下一页</a>
+    {% endif %}
+    <br>
+    <br>
+    <span class="page-current">
+        第{{ page_obj.number }}页，
+        共{{ page_obj.paginator.num_pages }}页.
+    </span>
+    </span>
+</div>
+{% endif %}
+
 
 </body>
 </html>
