@@ -92,7 +92,29 @@ DATABASES = {
         'PASSWORD': '123456',
         'HOST': '127.0.0.1',
         'PORT': '3306',
+    },
+    'db1':{
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'indexdb',
+        'USER': 'root',
+        'PASSWORD': '123456',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+        },
+    "db2":{
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'userdb',
+        'USER': 'root',
+        'PASSWORD': '123456',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
     }
+}
+DATABASE_ROUTERS = ['myDjango.db_router.dbAppsRouter']
+DATABASE_APPS_MAPPING = {
+    'admin': 'default',
+    'index': 'db1',
+    'user': 'db2',
 }
 
 

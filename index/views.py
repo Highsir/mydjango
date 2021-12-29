@@ -6,6 +6,8 @@ from django.urls import reverse
 from django.http import StreamingHttpResponse
 from django.http import FileResponse, response
 from django.views.generic import RedirectView, TemplateView, ListView, DetailView
+from .form import PersonInfoForm
+from django.views.generic.edit import FormView
 
 from index.models import PersonInfo
 
@@ -43,6 +45,9 @@ def index(request):
     elif request.method == 'POST':
         print(request.POST.get('user', ''))
         return render(request, 'index.html')
+
+def result(request):
+    return HttpResponse('Success')
 
 
 def create(request):
@@ -198,4 +203,11 @@ class indexDetail(DetailView):
     pk_url_kwarg = 'pk'
     model = PersonInfo
     # queryset = PersonInfo.objects.all()
+
+class indexFormView(FormView):
+    initial = {'name': 'Betty', 'age': 20}
+    template_name = 'index_form_view.html'
+    success_url = '/result'
+    form_class = PersonInfoForm
+    extra_context = {'title': '人员信息表'}
 
