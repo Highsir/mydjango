@@ -6,10 +6,10 @@ from django.urls import reverse
 from django.http import StreamingHttpResponse
 from django.http import FileResponse, response
 from django.views.generic import RedirectView, TemplateView, ListView, DetailView
-from .form import PersonInfoForm
+# from .form import PersonInfoForm
 from django.views.generic.edit import FormView
 
-from index.models import PersonInfo
+# from index.models import PersonInfo
 
 
 def index(request):
@@ -188,26 +188,26 @@ class clsIndex(TemplateView):
         return self.render_to_response(context)
 
 
-class indexList(ListView):
-    template_name = 'view.html'
-    extra_context = {'title': '人员信息表'}
-    queryset = PersonInfo.objects.filter().all()
-    paginate_by = 1
-
-class indexDetail(DetailView):
-    template_name = 'detail.html'
-    extra_context = {'title': '人员信息表'}
-    # 设置模型的查询字段
-    slug_field = 'age'
-    # 设置路由的变量名，与属性slug_field实现模型的查询操作
-    pk_url_kwarg = 'pk'
-    model = PersonInfo
-    # queryset = PersonInfo.objects.all()
-
-class indexFormView(FormView):
-    initial = {'name': 'Betty', 'age': 20}
-    template_name = 'index_form_view.html'
-    success_url = '/result'
-    form_class = PersonInfoForm
-    extra_context = {'title': '人员信息表'}
+# class indexList(ListView):
+#     template_name = 'view.html'
+#     extra_context = {'title': '人员信息表'}
+#     queryset = PersonInfo.objects.filter().all()
+#     paginate_by = 1
+#
+# class indexDetail(DetailView):
+#     template_name = 'detail.html'
+#     extra_context = {'title': '人员信息表'}
+#     # 设置模型的查询字段
+#     slug_field = 'age'
+#     # 设置路由的变量名，与属性slug_field实现模型的查询操作
+#     pk_url_kwarg = 'pk'
+#     model = PersonInfo
+#     # queryset = PersonInfo.objects.all()
+#
+# class indexFormView(FormView):
+#     initial = {'name': 'Betty', 'age': 20}
+#     template_name = 'index_form_view.html'
+#     success_url = '/result'
+#     form_class = PersonInfoForm
+#     extra_context = {'title': '人员信息表'}
 

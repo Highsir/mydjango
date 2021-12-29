@@ -13,7 +13,7 @@ urlpatterns = [
     # path('', views.clsIndex.as_view(), name='index'),
     # path('', views.indexList.as_view(), name='index'),
     # path('<pk>/<age>.html', views.indexDetail.as_view(), name='index'),
-    path('', views.indexFormView.as_view(), name='index'),
+    # path('', views.indexFormView.as_view(), name='index'),
     path('result', result, name='result'),
     # path('trunTo', RedirectView.as_view(url='/'), name='trunTo'),
     path('trunTo', views.trunTo.as_view(), name='trunTo'),
