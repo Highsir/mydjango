@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import ValidationError
 # from .models import PersonInfo
 #
 #
@@ -6,3 +7,29 @@ from django import forms
 #     class Meta:
 #         model = PersonInfo
 #         fields = '__all__'
+from index.models import PersonInfo
+
+
+def payment_validate(value):
+    if value > 30000:
+        raise ValidationError('请输入合理的薪资')
+
+
+class VocationForm(forms.Form):
+    job = forms.CharField(max_length=20, label='职位')
+    title = forms.CharField(max_length=20, label='职称',
+                            widget=forms.widgets.TextInput(attrs={"class": "c1"}),
+                            error_messages={"required": "职称不能为空"})
+    payment = forms.IntegerField(label='薪资', validators=[payment_validate])
+
+    value = PersonInfo.objects.values('name')
+    choices = [(i+1, v['name']) for i , v in enumerate(value)]
+    persion = forms.ChoiceField(choices=choices, label='姓名')
+
+    def clean_title(self):
+        data = self.cleaned_data['title']
+        return '初级' + data
+
+
+
+
