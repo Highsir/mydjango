@@ -1,0 +1,37 @@
+{# 模板继承 #}
+{% extends 'base.html' %}
+{% block title %}
+{# static 标签 #}
+{# django的用法： {{ static 'vavicon.ico' }}} #}
+<link rel="icon" href="{{ static('favicon.ico') }}">
+<title>Jinja2</title>
+{% endblock %}
+{% block body %}
+    {# 使用上下文 #}
+    {# django 的用法：{{ value.name }} #}
+    {# jinja2除了支持Django的用法，还支持以下用法 #}
+    <div>{{ value['name'] }}</div>
+
+    {# 使用过滤器 #}
+    <div>
+        {{ value['name'] | replace('Jinja2', 'Django') }}
+    </div>
+
+    {# for #}
+    {# django: {% for k,v in value.items %} #}
+    {% for k,v in value.items() %}
+    <div>key is {{ k }}</div>
+    <div>value is {{ v }}</div>
+    {% endfor %}
+
+    {# if #}
+    {% if value %}
+        <div>This is if</div>
+    {% else %}
+        <div>This is else</div>
+    {% endif %}
+
+    {# url #}
+    {# django: {% url 'index:index' %} #}
+    <a href="{{ url('index:index') }}">首页</a>
+{% endblock %}

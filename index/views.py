@@ -10,6 +10,7 @@ from django.views.generic import RedirectView, TemplateView, ListView, DetailVie
 from django.views.generic.edit import FormView
 
 # from index.models import PersonInfo
+from index.form import VocationForm
 
 
 def index(request):
@@ -27,24 +28,38 @@ def index(request):
     #     content = {'key': 'This is MyDjaogo'}
         # return render(request, 'index.html', context=value)
         # return render(request, 'index.html', locals())
-    if request.method == 'GET':
-        # 类方法的使用
-        print(request.is_secure())
-        print(request.is_ajax())
-        print(request.get_host())
-        print(request.get_full_path())
-        print(request.get_raw_uri())
-        # 属性的使用
-        print(request.COOKIES)
-        print(request.content_type)
-        print(request.content_params)
-        print(request.scheme)
-        # 获取GET的请求参数
-        print(request.GET.get('user', ''))
-        return render(request, 'index.html')
-    elif request.method == 'POST':
-        print(request.POST.get('user', ''))
-        return render(request, 'index.html')
+    # if request.method == 'GET':
+    #     # 类方法的使用
+    #     print(request.is_secure())
+    #     print(request.is_ajax())
+    #     print(request.get_host())
+    #     print(request.get_full_path())
+    #     print(request.get_raw_uri())
+    #     # 属性的使用
+    #     print(request.COOKIES)
+    #     print(request.content_type)
+    #     print(request.content_params)
+    #     print(request.scheme)
+    #     # 获取GET的请求参数
+    #     print(request.GET.get('user', ''))
+    #     return render(request, 'index.html')
+    # elif request.method == 'POST':
+    #     print(request.POST.get('user', ''))
+    #     return render(request, 'index.html')
+
+    # 验证自定义标签
+    # return render(request, 'index_template.html', locals())
+    # 验证自定义过滤器
+    # value = "Hello Python"
+    # return render(request, 'index_filter.html', locals())
+
+    # 验证jinja2
+    # value = {'name': 'This is jinja2'}
+    # return render(request, 'index_jinja2_template.html', locals())
+
+    # jinja自定义过滤器
+    value = {'name': 'This is jinja2'}
+    return render(request, 'index_replace.html', locals())
 
 def result(request):
     return HttpResponse('Success')
@@ -211,3 +226,18 @@ class clsIndex(TemplateView):
 #     form_class = PersonInfoForm
 #     extra_context = {'title': '人员信息表'}
 
+def index_form(request):
+    if request.method == "GET":
+        v = VocationForm()
+        return render(request, 'index_form.html', locals())
+    else:
+        v = VocationForm(request.POST)
+        if v.is_valid():
+            title = v['title']
+            c_title = v.cleaned_data['title']
+            print(c_title)
+            return HttpResponse('提交成功')
+        else:
+            error_msg = v.errors.as_json()
+            print(error_msg)
+            return render(request, 'index_form.html', locals())
