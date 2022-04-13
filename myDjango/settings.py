@@ -28,6 +28,7 @@ SECRET_KEY = 'aic0x4%1_beg6_bct^0(l97v=&%pxgpi4_ks&_cmko*o2r2l=!'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+# AUTH_USER_MODEL = "users.User"
 
 
 # Application definition
@@ -39,8 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'index',
     'user',
+    'index',
     "mydefined",
 ]
 
@@ -91,45 +92,57 @@ WSGI_APPLICATION = 'myDjango.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
+#
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mydjango',
-        'USER': 'root',
-        'PASSWORD': '123456',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
-    },
-    'db1':{
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'indexdb',
-        'USER': 'root',
-        'PASSWORD': '123456',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
-        },
-    "db2":{
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'userdb',
-        'USER': 'root',
-        'PASSWORD': '123456',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
-    }
+     'default': {
+         'ENGINE': 'django.db.backends.mysql',
+         'NAME': 'mydjango',
+         'USER': 'root',
+         'PASSWORD': '123456',
+         'HOST': '127.0.0.1',
+         'PORT': '3306',
+     },
 }
-DATABASE_ROUTERS = ['myDjango.db_router.dbAppsRouter']
-DATABASE_APPS_MAPPING = {
-    'admin': 'default',
-    'index': 'db1',
-    'user': 'db2',
-}
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'mydjango',
+#         'USER': 'root',
+#         'PASSWORD': '123456',
+#         'HOST': '127.0.0.1',
+#         'PORT': '3306',
+#     },
+#     'db1':{
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'indexdb',
+#         'USER': 'root',
+#         'PASSWORD': '123456',
+#         'HOST': '127.0.0.1',
+#         'PORT': '3306',
+#         },
+#     "db2":{
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'userdb',
+#         'USER': 'root',
+#         'PASSWORD': '123456',
+#         'HOST': '127.0.0.1',
+#         'PORT': '3306',
+#     }
+# }
+# DATABASE_ROUTERS = ['myDjango.db_router.dbAppsRouter']
+# DATABASE_APPS_MAPPING = {
+#     'admin': 'default',
+#     'index': 'db1',
+#     'user': 'db2',
+# }
 
 
 # Password validation
