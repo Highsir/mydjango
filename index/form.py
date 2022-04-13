@@ -1,13 +1,12 @@
 from django import forms
 from django.core.exceptions import ValidationError
-# from .models import PersonInfo
-#
-#
-# class PersonInfoForm(forms.ModelForm):
-#     class Meta:
-#         model = PersonInfo
-#         fields = '__all__'
-from index.models import PersonInfo
+from user.models import PersonInfo
+
+
+class PersonInfoForm(forms.ModelForm):
+    class Meta:
+        model = PersonInfo
+        fields = '__all__'
 
 
 def payment_validate(value):

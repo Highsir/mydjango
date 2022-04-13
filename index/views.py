@@ -10,7 +10,7 @@ from django.views.generic import RedirectView, TemplateView, ListView, DetailVie
 from django.views.generic.edit import FormView
 
 # from index.models import PersonInfo
-from index.form import VocationForm
+# from index.form import VocationForm
 
 
 def index(request):
