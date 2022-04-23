@@ -1,3 +1,5 @@
+import os
+
 from django.contrib import admin
 
 from user.models import PersonInfo
@@ -47,7 +49,7 @@ class VocationAdmin(admin.ModelAdmin):
     radio_fields = {'person': admin.HORIZONTAL}
 
     # 在数据新增或修改的页面设置可读子段,不可编辑
-    readonly_fields = ['job']
+    # readonly_fields = ['job']
 
     # 设置排序方式
     ordering = ['id']
@@ -85,3 +87,82 @@ class VocationAdmin(admin.ModelAdmin):
     # 设置"动作"栏的位置
     actions_on_top = False
     actions_on_bottom = True
+
+    # 重写get_readonly_fields函数
+    def get_readonly_fields(self, request, obj=None):
+        if request.user.is_superuser:
+            self.readonly_fields = []
+        else:
+            self.readonly_fields = ['payment']
+        return self.readonly_fields
+
+    list_display.append('colored_name')
+
+    # 根据当前用户名设置数据访问权限
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        else:
+            return qs.filter(id__lt=2)
+
+    # 新增或修改数据时,设置外键可选值
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == 'person' and not request.user.is_superuser:
+            v = Vocation.objects.filter(id__lt=2)
+            kwargs['queryset'] = PersonInfo.objects.filter(id__in=v)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+    # 获取数据模型的choice的值
+    def formfield_for_choice_field(self, db_field, request, **kwargs):
+        if db_field.name == 'job':
+            kwargs['choices'] = (('软件开发', '软件开发'),
+                                 ('软件测试', '软件测试'),)
+        return super().formfield_for_choice_field(db_field, request, **kwargs)
+
+    # 数据的修改实现日志记录
+    def save_model(self, request, obj, form, change):
+        if change:
+            user = request.user.username
+            job = self.model.objects.get(pk=obj.pk).job
+            person = form.cleaned_data['person'].name
+            path = os.path.abspath(os.path.dirname(__file__))
+            f = open(path + '/log/log.txt','a')
+            f.write(person + '职位: ' + job + ', 被' + user + '修改' + '\r\n')
+            f.close()
+        else:
+            pass
+        super().save_model(request, obj, form, change)
+
+    # 数据的删除实现日志记录
+    def delete_model(self, request, obj):
+
+        user = request.user.username
+        job = self.model.objects.get(pk=obj.pk).job
+        path = os.path.abspath(os.path.dirname(__file__))
+        f = open(path + '/log/log.txt', 'a')
+        f.write('职位: ' + job + ', 被' + user + '删除' + '\r\n')
+        f.close()
+
+        pass
+        super().delete_model(request, obj)
+
+    # 数据批量操作
+    def get_datas(self, request, queryset):
+        temp = []
+        for d in queryset:
+            t = [d.job, d.title, str(d.payment), d.person.name]
+            temp.append(t)
+        path = os.path.abspath(os.path.dirname(__file__))
+        f = open(path + '/data.txt', 'a')
+        for t in temp:
+            f.write(','.join(t) + '\r\n')
+
+        f.close()
+        # 设置提示信息
+        self.message_user(request, '数据导出成功')
+
+    # 设置函数的显示名称
+    get_datas.short_description = '导出所选数据'
+    # 添加到动作栏
+    actions = ['get_datas']
