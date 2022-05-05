@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'user',
     'index',
     "mydefined",
+    "django_jinja",
 ]
 
 MIDDLEWARE = [
@@ -59,17 +60,24 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'myDjango.urls'
 
 TEMPLATES = [
-    #  使用Jinja2模板引擎
+    # #  使用Jinja2模板引擎
+    # {
+    #     'BACKEND': 'django.template.backends.jinja2.Jinja2',
+    #     'DIRS': [
+    #         os.path.join(BASE_DIR, 'templates'),
+    #     ],
+    #     'APP_DIRS': True,
+    #     'OPTIONS': {
+    #         'environment': 'myDjango.jinja2.environment',
+    #     },
+    # },
+    # 使用django-jinja2
     {
-        'BACKEND': 'django.template.backends.jinja2.Jinja2',
-        'DIRS': [
-            os.path.join(BASE_DIR, 'templates'),
-        ],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'environment': 'myDjango.jinja2.environment',
+            "BACKEND": "django_jinja.backend.Jinja2",
+            "DIRS": [],
+            "APP_DIRS": True,
+            "OPTIONS": {}
         },
-    },
     # 使用Django模板引擎
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

@@ -22,7 +22,7 @@ from index.views import index
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(('index.urls', 'index'), namespace='index')),
-    path('user/', include(('user.urls', 'user'), namespace='user')),
+    path('', include(('user.urls', 'user'), namespace='user')),
 ]
 # 全局404
 handler404 = 'index.views.pag_not_found'
