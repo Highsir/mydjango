@@ -1,3 +1,5 @@
+import random
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
@@ -102,3 +104,36 @@ def aewtpaView2(request):
 def logoutView(request):
     logout(request)
     return HttpResponse('注销成功')
+
+
+def findpsView(request):
+    button = '获取验证码'
+    VCodeInfo = False
+    pssword = False
+    if request.method == "POST":
+        u = request.POST.get('username', '')
+        VCode = request.POST.get('VCode', '')
+        p = request.POST.get('password', '')
+        user = User.objects.filter(username=u)
+        if not user:
+            tips = '用户' + u + '不存在'
+        else:
+            if not request.session.get('VCode', ''):
+                button = '重置密码'
+                tips = '验证码已发送'
+                password = True
+                VCodeInfo = True
+                VCode = str(random.randint(1000, 9999))
+                request.session['VCode'] = VCode
+                user[0].email_user = ('找回密码', VCode)
+            elif VCode == request.session.get('VCode'):
+                dj_ps = make_password(p , None, 'pbkdf2_sha256')
+                user[0].password = dj_ps
+                user[0].save()
+                tips = '密码重置'
+            else:
+                tips = '验证码错误, 请重新获取'
+                VCodeInfo = False
+                password = False
+                del request.session['VCode']
+    return render(request, 'user_email.html', locals())
