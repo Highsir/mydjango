@@ -202,3 +202,11 @@ SIGNING_BACKEND = 'myDjango.signer.myTimestampSigner'
 FILE_UPLOAD_TEMP_DIR = '/tmp'
 FILE_UPLOAD_MAX_MEMORY_SIZE = 209715200
 FILE_UPLOAD_HANDLERS = ['myDjango.handler.myFileUploadHandler']
+
+# 邮件配置信息
+EMAIL_USE_SSL = True
+EMAIL_HOST = 'smtp.qq.com'
+EMAI_PORT = 465
+EMAIL_HOST_USER = '1015028106@qq.com'
+EMAIL_HOST_PASSWORD = 'ftoebckptysfbdeb'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
