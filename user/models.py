@@ -1,3 +1,4 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
@@ -14,3 +15,11 @@ class PersonInfo(models.Model):
         db_table = "user"
         verbose_name = "个人信息表"
         verbose_name_plural = "个人信息表"
+
+class MyUser(AbstractUser):
+    qq = models.CharField('QQ号码', max_length=16)
+    weChat = models.CharField('微信账号', max_length=100)
+    mobile = models.CharField('手机号码', max_length=11)
+
+    def __str__(self):
+        return self.username

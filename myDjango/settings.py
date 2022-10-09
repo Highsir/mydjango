@@ -17,7 +17,6 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -73,11 +72,11 @@ TEMPLATES = [
     # },
     # 使用django-jinja2
     {
-            "BACKEND": "django_jinja.backend.Jinja2",
-            "DIRS": [],
-            "APP_DIRS": True,
-            "OPTIONS": {}
-        },
+        "BACKEND": "django_jinja.backend.Jinja2",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {}
+    },
     # 使用Django模板引擎
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -97,7 +96,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'myDjango.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 #
@@ -109,14 +107,14 @@ WSGI_APPLICATION = 'myDjango.wsgi.application'
 # }
 
 DATABASES = {
-     'default': {
-         'ENGINE': 'django.db.backends.mysql',
-         'NAME': 'mydjango',
-         'USER': 'root',
-         'PASSWORD': '123456',
-         'HOST': '127.0.0.1',
-         'PORT': '3306',
-     },
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'new_django',
+        'USER': 'root',
+        'PASSWORD': '123456',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+    },
 }
 
 # DATABASES = {
@@ -171,7 +169,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -184,7 +181,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
@@ -210,3 +206,5 @@ EMAI_PORT = 465
 EMAIL_HOST_USER = '1015028106@qq.com'
 EMAIL_HOST_PASSWORD = 'ftoebckptysfbdeb'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+AUTH_USER_MODEL = 'user.MyUser'
