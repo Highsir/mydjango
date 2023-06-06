@@ -1,11 +1,13 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from user.models import PersonInfo
+from user.models import MyUser
 
 
 class PersonInfoForm(forms.ModelForm):
     class Meta:
-        model = PersonInfo
+        model = MyUser
+        # model = PersonInfo
         fields = '__all__'
 
 
@@ -15,6 +17,7 @@ def payment_validate(value):
 
 
 class VocationForm(forms.Form):
+
     job = forms.CharField(max_length=20, label='职位')
     title = forms.CharField(max_length=20, label='职称',
                             widget=forms.widgets.TextInput(attrs={"class": "c1"}),

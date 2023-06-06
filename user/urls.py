@@ -1,4 +1,5 @@
-from django.urls import path
+from django.contrib import admin
+from django.urls import path, include
 from . import views
 from .views import registerView, setpsView, logoutView, findpsView
 
@@ -9,4 +10,5 @@ urlpatterns = [
     path('setps', setpsView, name='setps'),
     path('logout', logoutView, name='logout'),
     path('findps', findpsView, name='findps'),
+    path('', registerView, name='register'),
 ]

@@ -21,7 +21,9 @@ from index.views import index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(('index.urls', 'index'), namespace='index')),
+    # path('', include(('index.urls', 'index'), namespace='index')),
+    # path('', include(('user.urls', 'user'), namespace='user')),
+    path('admin/', admin.site.urls),
     path('', include(('user.urls', 'user'), namespace='user')),
 ]
 # 全局404

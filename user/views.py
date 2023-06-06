@@ -2,9 +2,13 @@ import random
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render
+# from django.contrib.auth import get_user_model
+# User = get_user_model()
+from user.models import MyUser as User
+from .form import MyUserCreationnForm
 
 
 def index(request):
@@ -30,19 +34,29 @@ def userLogin(request):
 
 
 def registerView(request):
-    title = '注册'
-    pageTitle = '用户注册'
+    # title = '注册'
+    # pageTitle = '用户注册'
+    # if request.method == 'POST':
+    #     u = request.POST.get('username')
+    #     p = request.POST.get('password')
+    #     if User.objects.filter(username=u):
+    #         tips = '用户已存在'
+    #     else:
+    #         d = dict(username=u, password=p, is_staff=1, is_superuser=1)
+    #         user = User.objects.create_user(**d)
+    #         user.save()
+    #         tips = '注册成功'
+
+    # 使用表单实现用户注册
     if request.method == 'POST':
-        u = request.POST.get('username')
-        p = request.POST.get('password')
-        if User.objects.filter(username=u):
-            tips = '用户已存在'
-        else:
-            d = dict(username=u, password=p, is_staff=1, is_superuser=1)
-            user = User.objects.create_user(**d)
+        user = MyUserCreationnForm(request.POST)
+        if user.is_valid():
             user.save()
             tips = '注册成功'
-    return render(request, 'user.html', locals())
+        else:
+            tips = '注册失败'
+    user = MyUserCreationnForm()
+    return render(request, 'myuser.html', locals())
 
 
 def setpsView(request):

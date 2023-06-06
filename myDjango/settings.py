@@ -27,7 +27,8 @@ SECRET_KEY = 'aic0x4%1_beg6_bct^0(l97v=&%pxgpi4_ks&_cmko*o2r2l=!'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-# AUTH_USER_MODEL = "users.User"
+
+AUTH_USER_MODEL = 'user.MyUser'
 
 
 # Application definition
@@ -207,4 +208,3 @@ EMAIL_HOST_USER = '1015028106@qq.com'
 EMAIL_HOST_PASSWORD = 'ftoebckptysfbdeb'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-AUTH_USER_MODEL = 'user.MyUser'
